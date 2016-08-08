@@ -1,0 +1,37 @@
+version: "2"
+services:
+ ncx:
+  container_name: ncx
+  build: .
+  command: mvn clean install -DskipTests 
+  command: mvn tomcat:run 
+  expose:
+   - "8080"
+   - "8090"
+  ports:
+   - "8080:8080"
+   - "8090:8090"
+  links:
+   - "mongoapp"
+   - "postgresapp"
+
+ mongoapp:
+  container_name: mongoappc
+  image: mongoapp
+  depends_on: 
+   - "postgresapp"
+  expose: 
+   - "27017"
+  ports:
+  - "27017:27017"
+ 
+ postgresapp:
+  container_name: postgresappc 
+  image: postgresapp
+  environment:
+   - POSTGRES_PASSWORD=postgres
+   - POSTGRES_USER=postgres
+  expose:
+   - "5432"
+  ports:
+  - "5432:5432"
