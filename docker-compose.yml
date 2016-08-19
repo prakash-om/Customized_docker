@@ -3,8 +3,7 @@ services:
  ncx:
   container_name: ncx
   build: .
-  command: mvn clean install -DskipTests 
-  command: mvn tomcat:run 
+  command: mvn clean install
   expose:
    - "8080"
    - "8090"
